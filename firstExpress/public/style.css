@@ -1,0 +1,24 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html, body, #root{
+    width: 100%;
+    height: 100%;
+}
+#root{
+    background-color: #333;
+    padding: 20px;
+}
+a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+a:hover{
+    color: gold;
+}
+h1, h2, h3, h4, h5, h6{
+    color: white;
+}
