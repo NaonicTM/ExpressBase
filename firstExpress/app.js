@@ -6,6 +6,12 @@ const logger = require('./logger')
 const authorize = require('./authorize')
 
 
+const productsRoute = require('./routes/productsRoute/productsRoute')
+app.use('/api/products', productsRoute)
+const authRoute = require('./routes/authRoute/auth')
+app.use('/login', authRoute)
+
+
 app.use(express.static('./public'))
 
 //everything will use logger
@@ -26,30 +32,10 @@ app.get('/about', (req, res) => {
     res.sendFile(path.join(process.cwd(), './public/about.html'))
 })
 
-app.get('/api/products', (req, res) => {
-    const newProducts = products.map((product) => {
-        const {id,item,image} = product;
-        return {id, item, image}
-    })
-    res.json(newProducts)
-    // res.json(products)
-})
-
 app.get('/api/people', (req, res) => {
     res.status(200).json({success: true, data: people})
 })
 
-//  getting a single product route parametars
-app.get('/api/products/:productId', (req, res) => {
-    // console.log(req)
-    // console.log("!!!", req.params.productId)
-    const {productId} = req.params;
-    const singleProduct = products.find((product) => product.id === Number(productId))
-    if(!singleProduct) return res.status(404).sendFile(path.join(process.cwd(), './public/error.html'))
-    res.json(singleProduct)
-})
-
-// Query Params
 app.get('/api/v1/query', (req, res) => {
 
     const {search, limit} = req.query;
@@ -62,7 +48,6 @@ app.get('/api/v1/query', (req, res) => {
 
     res.status(200).json(sortedProducts)
 })
-
 
 app.listen(5001, () => {
     console.log('server is listening at 5001')
